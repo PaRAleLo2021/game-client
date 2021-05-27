@@ -9,7 +9,7 @@ export default class StartGame extends Phaser.Scene {
 
     init(){
         /**   Chat   **/
-        this.socket_chat = io("http://localhost:4000", { 
+        this.socket_chat = io("https://chat-y4shapg4za-lm.a.run.app", { transports : ["websocket"],
             autoConnect: false });
         this.chatMessages = [];
 
@@ -44,7 +44,7 @@ export default class StartGame extends Phaser.Scene {
         /**   Game   **/
         let buttonStartGame = buttonStartGame = this.add.image(300,600, "button").setScale(0.5,0.5).setVisible(false);
 
-        this.socket = io('http://localhost:3000', {transports : ["websocket"] });
+        this.socket = io('https://server-y4shapg4za-lm.a.run.app', {transports : ["websocket"] });
 
         this.socket.on('getGameId', function () {
         	self.socket.emit("getGameId",self.gameid);
@@ -134,7 +134,7 @@ export default class StartGame extends Phaser.Scene {
         });
         
         this.socket_chat.on("joined", async (gameId) => {
-            let result = await fetch("http://localhost:4000/chats?room=" + gameId)
+            let result = await fetch("https://chat-y4shapg4za-lm.a.run.app/chats?room=" + gameId)
                 .then(response => response.json());
             this.chatMessages = result.messages;
             this.chatMessages.push("\n*** Game Chat Start ***");
